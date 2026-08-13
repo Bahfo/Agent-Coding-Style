@@ -1,19 +1,29 @@
 #!/usr/bin/env bash
 set -e
 
-RULER_PACKS="$HOME/.ruler/packs"
+RULER_SOURCE="$HOME/.ruler"
 GLOBAL_AGENTS_DIR="$HOME/.agents"
 
-echo "Setting up Global Agent Rules in $GLOBAL_AGENTS_DIR..."
+echo "[Ruler] Setting up Global Agent Rules in $GLOBAL_AGENTS_DIR..."
 
-if [ ! -d "$RULER_PACKS" ]; then
-    echo "Error: ~/.ruler/packs missing. Run install-ruler.sh first."
+if [ ! -d "$RULER_SOURCE" ]; then
+    echo "Error: $RULER_SOURCE directory not found. Please run installer first."
     exit 1
 fi
 
 mkdir -p "$GLOBAL_AGENTS_DIR"
-cp -r "$RULER_PACKS"/* "$GLOBAL_AGENTS_DIR/"
-echo "  ✓ Synced packs into $GLOBAL_AGENTS_DIR"
+
+shopt -s dotglob nullglob
+
+for item in "$RULER_SOURCE"/*; do
+    if [ "$(basename "$item")" != "bin" ]; then
+        cp -rn "$item" "$GLOBAL_AGENTS_DIR/" 2>/dev/null || true
+    fi
+done
+
+shopt -u dotglob nullglob
+
+echo "  ✓ Synced ~/.ruler contents into $GLOBAL_AGENTS_DIR"
 
 GLOBAL_PROMPT_BODY=$(cat <<EOF
 # GLOBAL AGENT OPERATING DIRECTIVE
@@ -29,6 +39,7 @@ GLOBAL_PROMPT_BODY=$(cat <<EOF
 EOF
 )
 
+echo ""
 echo "Select global setup options:"
 echo " 1) OpenCode (~/.config/opencode/agents/build.md)"
 echo " 2) Cursor (~/.cursor/rules/global-ruler.mdc)"
