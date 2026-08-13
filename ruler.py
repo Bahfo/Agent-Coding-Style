@@ -12,8 +12,8 @@ import urllib.request
 import zipfile
 from pathlib import Path
 
-GITHUB_USER = "EXcellent-TechStacks"
-GITHUB_REPO = "Agent-Ruler"
+GITHUB_USER = "Bahfo"
+GITHUB_REPO = "Agent-Coding-Style"
 BRANCH = "main"
 
 INSTALLATION_SCRIPT_PATH = "install-ruler.sh"
