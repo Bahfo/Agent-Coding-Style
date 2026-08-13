@@ -14,14 +14,17 @@ fi
 
 mkdir -p "$TARGET_AGENTS_DIR"
 
-for folder in docs rules skills packs; do
-    if [ -d "$RULER_SOURCE/$folder" ]; then
-        mkdir -p "$TARGET_AGENTS_DIR/$folder"
-        cp -rn "$RULER_SOURCE/$folder/"* "$TARGET_AGENTS_DIR/$folder/" 2>/dev/null || true
+shopt -s dotglob nullglob
+
+for item in "$RULER_SOURCE"/*; do
+    if [ "$(basename "$item")" != "bin" ]; then
+        cp -rn "$item" "$TARGET_AGENTS_DIR/" 2>/dev/null || true
     fi
 done
 
-echo "  ✓ Populated ./$TARGET_AGENTS_DIR from ~/.ruler/"
+shopt -u dotglob nullglob
+
+echo "Populated ./$TARGET_AGENTS_DIR from ~/.ruler/"
 
 cat <<'EOF' > "$TARGET_AGENTS_MD"
 # AGENT OPERATING GUIDELINES & RULES
@@ -54,4 +57,4 @@ mode: primary
 Read AGENTS.md and recursively traverse all files inside .agents/ before executing any user prompt.
 EOF
 
-echo "✅ Done! Agent is fully aware of rules and ready to run."
+echo "Operation Completed."

@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -e
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SOURCE_BIN="$SCRIPT_DIR/bin"
+
 RULER_DIR="$HOME/.ruler"
 BIN_DIR="$RULER_DIR/bin"
 
@@ -10,19 +13,22 @@ echo "Installing Agent Ruler..."
 
 mkdir -p "$BIN_DIR"
 
-COMMANDS=("ruler-init" "ruler-setup" "ruler-install" "ruler-browse" "ruler-add" "ruler-show" "ruler-remove")
+if [ ! -d "$SOURCE_BIN" ]; then
+    echo "Error: Source script directory '$SOURCE_BIN' not found."
+    exit 1
+fi
 
-for cmd in "${COMMANDS[@]}"; do
-    TARGET_SCRIPT="$BIN_DIR/$cmd"
-    cat <<EOF > "$TARGET_SCRIPT"
-#!/usr/bin/env bash
-# Agent Ruler CLI Delegate: $cmd
-echo "[Ruler] Executing $cmd..."
-EOF
-    chmod +x "$TARGET_SCRIPT"
+for script in "$SOURCE_BIN"/*; do
+    [ -f "$script" ] || continue
+    
+    filename=$(basename "$script")
+    cmd_name="${filename%.sh}"
+    
+    cp -f "$script" "$BIN_DIR/$cmd_name"
+    chmod +x "$BIN_DIR/$cmd_name"
+    echo "  ✓ Installed $cmd_name"
 done
 
-# 3. Add to User Shell Profile
 SHELL_PROFILE=""
 if [ -n "$ZSH_VERSION" ] || [[ "$SHELL" == *"zsh"* ]]; then
     SHELL_PROFILE="$HOME/.zshrc"
