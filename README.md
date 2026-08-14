@@ -37,6 +37,3 @@ Ruler come with a set of commands. Here is the configuration set:
 
 ## Agentic Packs
 For additional packages related to a certain programming language, you can install any and use. We provide a set of trusted and tested rules for each programming language. You are also free to download and install any other packages or build your own (though untrusted).
-
-## A Word to Users
-Thanks for using Ruler. Our agents packages manager. Feel free to give us your feedback too.

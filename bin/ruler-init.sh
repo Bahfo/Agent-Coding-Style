@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+
+# (C) COPYRIGHT 2026 EXcellent TechStacks - All Rights Reserved.
+# Module for setting up ruler inside a specific directory.
+
 set -e
 
 RULER_SOURCE="$HOME/.ruler"

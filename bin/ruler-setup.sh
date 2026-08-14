@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+
+# (C) COPYRIGHT 2026 EXcellent TechStacks - All Rights Reserved.
+# Module for setting up ruler on the global system files.
+
 set -e
 
 RULER_SOURCE="$HOME/.ruler"
@@ -23,7 +27,7 @@ done
 
 shopt -u dotglob nullglob
 
-echo "  ✓ Synced ~/.ruler contents into $GLOBAL_AGENTS_DIR"
+echo "Synced ~/.ruler contents into $GLOBAL_AGENTS_DIR"
 
 GLOBAL_PROMPT_BODY=$(cat <<EOF
 # GLOBAL AGENT OPERATING DIRECTIVE
@@ -57,7 +61,7 @@ mode: primary
 
 $GLOBAL_PROMPT_BODY
 EOF
-    echo "  ✓ OpenCode global configuration updated."
+    echo "OpenCode global configuration updated."
 }
 
 apply_cursor() {
@@ -70,7 +74,7 @@ alwaysApply: true
 
 $GLOBAL_PROMPT_BODY
 EOF
-    echo "  ✓ Cursor global configuration updated."
+    echo "Cursor global configuration updated."
 }
 
 apply_claude() {

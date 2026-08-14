@@ -1,0 +1,1 @@
+© Bahaa Nofal - All Rights Reserved.
